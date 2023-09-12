@@ -68,12 +68,15 @@ if (isset($_POST['blogDeleteBtn'])) {
                                         <td>
                                             <form action="" method="post">
                                                 <input type="hidden" name="id" value="<?php echo $blog->id ?>">
-                                                <a href="index.php?page=blogs-edit&id=<?php echo $blog->id ?>" class="btn btn-success btn-sm">
+                                                <a href="index.php?page=blogs-edit&id=<?php echo $blog->id ?>" class="btn btn-success btn-sm" title="edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <button name="blogDeleteBtn" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">
+                                                <button name="blogDeleteBtn" class="btn btn-danger btn-sm" title="delete" onclick="return confirm('Are you sure you want to delete?')">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
+                                                <a href="index.php?page=blogs-comments&id=<?php echo $blog->id ?>" class="btn btn-info btn-sm" title="comment">
+                                                    <i class="fas fa-comment-dots"></i>
+                                                </a>
                                             </form>
                                         </td>
                                     </tr>

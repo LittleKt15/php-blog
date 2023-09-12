@@ -10,6 +10,27 @@ if (!isset($_SESSION['user'])) {
 }
 
 include_once('layout/header.php');
+
+function getRowCount($table)
+{
+    global $db;
+    $stmt = $db->prepare("SELECT COUNT(*) as count FROM $table");
+    $stmt->execute();
+    $data = $stmt->fetchObject();
+    return $data;
+}
+
+// Get category count
+$category = getRowCount('categories');
+
+// Get blog count
+$blog = getRowCount('blogs');
+
+// Get user count
+$user = getRowCount('users');
+
+// Get comment count
+$comment = getRowCount('comments');
 ?>
 
 <!-- Page Wrapper -->
@@ -55,6 +76,9 @@ include_once('layout/header.php');
                     case 'blogs-edit':
                         require_once('blog/edit.php');
                         break;
+                    case 'blogs-comments':
+                        require_once('blog/comments.php');
+                        break;
                         // user page
                     case 'users':
                         require_once('user/index.php');
@@ -64,6 +88,9 @@ include_once('layout/header.php');
                         break;
                     case 'users-edit':
                         require_once('user/edit.php');
+                        break;
+                    case 'users-profile':
+                        require_once('user/profile.php');
                         break;
                 }
             else :
@@ -85,8 +112,8 @@ include_once('layout/header.php');
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                                Categories</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $category->count ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -103,8 +130,8 @@ include_once('layout/header.php');
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                Blogs</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $blog->count ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -120,16 +147,11 @@ include_once('layout/header.php');
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Users
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $user->count ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -148,8 +170,8 @@ include_once('layout/header.php');
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                Comments</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $comment->count ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>

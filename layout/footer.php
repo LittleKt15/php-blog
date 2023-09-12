@@ -32,7 +32,18 @@ if (isset($_POST['signInBtn'])) {
             echo "<script>sweetAlert('Sign in successfully.', 'index.php')</script>";
         }
     } else {
-        echo "<script>alert('Sign in failed!')</script>";
+?>
+        <script>
+            Swal.fire({
+                title: 'Sorry!',
+                text: 'Sign in failed!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            }).then(function() {
+                location.href = page
+            })
+        </script>
+<?php
     }
 }
 ?>
